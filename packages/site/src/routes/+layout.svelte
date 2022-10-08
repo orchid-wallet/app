@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '../tailwind-output.css';
+  import '../app.css';
 </script>
 <div class="w-full h-full">
   <slot />
