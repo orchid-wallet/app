@@ -3,6 +3,8 @@ import { ethers, Signer } from 'ethers';
 import { BaseWeb3Store, web3Store } from './web3';
 import type { Web3Provider } from '@ethersproject/providers';
 import {browser} from "$app/environment";
+import { z, ZodObject } from 'zod';
+import Storage from './Storage';
 
 export interface Auth {
   authenticated?: boolean;
@@ -13,6 +15,21 @@ export const BaseAuthStore = {
   authenticated: false,
   walletAddress: undefined,
 } as Auth;
+
+function loadAddressFromMessage(message: string, signature: string): string | null {
+  const { hashMessage, arrayify, recoverAddress } = ethers.utils;
+  if (validMessage(message)) {
+    const msgHash = hashMessage(message);
+    const msgHashBytes = arrayify(msgHash);
+    try {
+      const public_address = recoverAddress(msgHashBytes, signature);
+      return public_address;
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
+}
 
 function validMessage(message: string) {
   const split = message.split('\n').filter((l) => l !== '');
@@ -28,23 +45,50 @@ function validMessage(message: string) {
   return true;
 }
 
-// let stored
-// if (browser) {
-//   stored = localStorage.auth
-// }
+export class AuthStorage extends Storage<Auth> {
+  private readonly key = 'AuthStorageIntegration';
+  private readonly validator = z.object({
+    authenticated: z.boolean().optional(),
+    walletAddress: z.string().optional(),
+  })
+  constructor() {
+    super();
+  }
+  public getAuth(): Auth | null {
+    return this.get(this.validator, this.key);
+  }
 
-// const store = writable(stored || BaseAuthStore);
+  public setAuth(item: Auth) {
+    this.set(this.validator, item, this.key);
+  }
+
+  public clear() {
+    this.clearItem(this.key);
+  }
+
+}
+
 const store = writable(BaseAuthStore);
 const { subscribe, set, update } = store;
 
-// store.subscribe((value) => localStorage.auth = value)
+if (browser) {
+  const authStorage = new AuthStorage()
+  const stored = authStorage.getAuth()
+  if (stored) {
+    store.update((self) => ({
+      ...self,
+      ...stored,
+    }));
+  }
+  store.subscribe((value) => {
+    authStorage.setAuth(value);
+  })
+}
 
 export const authStore = {
   subscribe,
   set,
   update,
-  authenticated: false,
-  walletAddress: undefined,
   authenticate: async () => {
     const { signer } = get(web3Store);
     if (!signer) return;
@@ -70,17 +114,3 @@ export const authStore = {
   }
 }
 
-function loadAddressFromMessage(message: string, signature: string): string | null {
-  const { hashMessage, arrayify, recoverAddress } = ethers.utils;
-  if (validMessage(message)) {
-    const msgHash = hashMessage(message);
-    const msgHashBytes = arrayify(msgHash);
-    try {
-      const public_address = recoverAddress(msgHashBytes, signature);
-      return public_address;
-    } catch (e) {
-      return null;
-    }
-  }
-  return null;
-}

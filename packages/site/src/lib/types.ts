@@ -3,3 +3,8 @@ export enum ToastType {
   Error = 'danger',
   Info = 'info',
 }
+
+export interface DropdownOption {
+  text: string;
+  value: any;
+}

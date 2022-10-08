@@ -1,43 +1,17 @@
 <script lang="ts">
+
   import { createEventDispatcher } from 'svelte';
+
   const dispatch = createEventDispatcher();
-  export let outline = false;
-  export let disabled = false;
   export let loading = false;
-  export let submit = false;
-  export let blockButton = false;
-  export let xPadding = 'px-5';
-  export let primary = false;
-  export let secondary = false;
-  export let tertiary = false;
+  export let title: 'Get Started';
+
 </script>
 
-<button
-  type={submit ? 'submit' : 'button'}
-  on:click
-  class={`
-              ${$$props.class} ${xPadding}
-               flex justify-center items-center text-menutitle py-2 border transition-colors whitespace-nowrap rounded-lg
-              ${
-                  disabled
-                      ? `pointer-events-none bg-secondary-light`
-                      : !outline
-                      ? `border-primary-light bg-primary-light text-white hover:bg-transparent hover:text-primary-light`
-                      : `border-primary-light text-primary-light hover:bg-primary-light hover:text-white`
-              }
-              ${loading ? 'pointer-events-none' : ''}
-              ${blockButton ? 'min-w-[200px]' : ''}
-              ${primary ? 'bg-primary text-white hover:bg-primary-hover hover:!text-white disabled:bg-primary-disabled' : ''}
-              ${primary && disabled ? 'bg-primary-disabled' : ''}
-              ${secondary ? '!bg-white !border-secondary !text-primary-dark hover:!bg-secondary hover:!text-primary-dark' : ''}
-              ${tertiary ? '!bg-white !border-secondary !text-primary hover:!bg-primary-disabled hover:!text-primary' : ''}
-          `}
->
-  {#if !loading}
-    <slot><!-- optional fallback --></slot>
-  {:else}<div class="loader" />
-  {/if}
-</button>
+<div class="">
+  <button class="relative inline-flex items-center place-items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          on:click><div class:opacity-0={loading}>{title}</div><div class:opacity-0={!loading} class="absolute loader"></div></button>
+</div>
 
 <style>
   .loader {

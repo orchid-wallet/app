@@ -6,6 +6,15 @@
 
   $: authenticated = $authStore.authenticated
 
+  import {browser} from "$app/environment";
+  import {goto} from "$app/navigation";
+
+  $: if (browser) {
+    if (authenticated) {
+      goto('/')
+    }
+  }
+
 </script>
 <div class="w-full h-full">
   <Navbar />

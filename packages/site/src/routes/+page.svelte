@@ -1,5 +1,5 @@
 <script lang="ts">
-
+  
 </script>
 
 <div class="mx-auto max-w-5xl py-16 px-4 sm:px-6 lg:px-8">
@@ -15,7 +15,7 @@
             <a href="/create" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-5 py-3 text-base font-medium text-white hover:bg-indigo-700">Create New Wallet</a>
           </div>
           <div class="ml-3 inline-flex">
-            <a href="/add" class="inline-flex items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-indigo-600 hover:bg-indigo-50">Add Existing Wallet</a>
+            <a href="/load" class="inline-flex items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-indigo-600 hover:bg-indigo-50">Load Existing Wallet</a>
           </div>
         </div>
       </div>

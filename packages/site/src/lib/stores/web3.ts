@@ -1,8 +1,8 @@
 import { get, writable } from 'svelte/store';
-import { ethers, Signer } from 'ethers';
+import type { Signer } from 'ethers';
 import { utils } from 'ethers';
 import { authStore } from './auth';
-import type { Web3Provider } from '@ethersproject/providers';
+import { Web3Provider } from '@ethersproject/providers';
 import {browser} from "$app/environment";
 
 export enum EthersStoreErrorType {
@@ -44,16 +44,8 @@ export const BaseWeb3Store = {
   signerAddress: null,
 } as EthersStore;
 
-// let stored
-// if (browser) {
-//   stored = localStorage.web3
-// }
-
-// const store = writable(stored || BaseWeb3Store);
 const store = writable(BaseWeb3Store);
 const { subscribe, set, update } = store;
-
-// store.subscribe((value) => localStorage.web3 = value)
 
 const init = () => {
   const { eipProvider } = get(store);
@@ -92,7 +84,7 @@ const set1193Provider = async (eipProvider: any) => {
     return false;
   }
   update((self) => {
-    self.provider = new ethers.providers.Web3Provider(eipProvider, 'any');
+    self.provider = new Web3Provider(eipProvider)
     self.eipProvider = eipProvider;
     self.providerType = 'EIP1193';
     if (eipProvider.on) {
@@ -147,7 +139,6 @@ export const web3Store = {
     }
     return true;
   },
-
   disconnect: () => {
     init();
   },
