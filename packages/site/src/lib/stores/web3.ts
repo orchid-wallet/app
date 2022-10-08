@@ -3,6 +3,7 @@ import { ethers, Signer } from 'ethers';
 import { utils } from 'ethers';
 import { authStore } from './auth';
 import type { Web3Provider } from '@ethersproject/providers';
+import {browser} from "$app/environment";
 
 export enum EthersStoreErrorType {
   ProviderNotAvailable,
@@ -43,8 +44,16 @@ export const BaseWeb3Store = {
   signerAddress: null,
 } as EthersStore;
 
+// let stored
+// if (browser) {
+//   stored = localStorage.web3
+// }
+
+// const store = writable(stored || BaseWeb3Store);
 const store = writable(BaseWeb3Store);
 const { subscribe, set, update } = store;
+
+// store.subscribe((value) => localStorage.web3 = value)
 
 const init = () => {
   const { eipProvider } = get(store);

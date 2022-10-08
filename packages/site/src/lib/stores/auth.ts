@@ -2,17 +2,17 @@ import { get, writable } from 'svelte/store';
 import { ethers, Signer } from 'ethers';
 import { BaseWeb3Store, web3Store } from './web3';
 import type { Web3Provider } from '@ethersproject/providers';
+import {browser} from "$app/environment";
 
 export interface Auth {
-  authenticated?: boolean | null;
-  walletAddress?: string | null;
+  authenticated?: boolean;
+  walletAddress?: string;
 }
 
 export const BaseAuthStore = {
   authenticated: false,
-  walletAddress: null,
+  walletAddress: undefined,
 } as Auth;
-
 
 function validMessage(message: string) {
   const split = message.split('\n').filter((l) => l !== '');
@@ -28,13 +28,23 @@ function validMessage(message: string) {
   return true;
 }
 
+// let stored
+// if (browser) {
+//   stored = localStorage.auth
+// }
+
+// const store = writable(stored || BaseAuthStore);
 const store = writable(BaseAuthStore);
 const { subscribe, set, update } = store;
+
+// store.subscribe((value) => localStorage.auth = value)
 
 export const authStore = {
   subscribe,
   set,
   update,
+  authenticated: false,
+  walletAddress: undefined,
   authenticate: async () => {
     const { signer } = get(web3Store);
     if (!signer) return;

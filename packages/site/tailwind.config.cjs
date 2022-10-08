@@ -14,7 +14,7 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
   content: ['./src/**/*.{html,js,svelte,ts}'],
   mode: 'jit',
 }

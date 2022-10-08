@@ -1,7 +1,8 @@
 <script lang="ts">
 
   import { web3Store } from '$lib/stores/web3';
-  import {authStore} from "$lib/stores/auth.js";
+  import { authStore } from "$lib/stores/auth.js";
+  import { goto } from '$app/navigation';
 
 </script>
 
@@ -10,5 +11,6 @@
           on:click={async () => {
             web3Store.disconnect()
             authStore.reset()
+            await goto('/')
         }}>Disconnect</button>
 </div>
