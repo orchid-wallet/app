@@ -7,3 +7,6 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 }
+
+declare const UtilCopyToClipboard: typeof import('./lib/components/util/CopyToClipboard.svelte')['default'];
+declare const UIToast: typeof import('./lib/components/util/Toast.svelte')['default'];
