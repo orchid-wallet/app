@@ -4,15 +4,13 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "react-scripts build",
-    "clean": "rimraf build",
-    "eject": "react-scripts eject",
-    "lint": "yarn lint:eslint && yarn lint:misc --check",
-    "lint:eslint": "eslint . --cache --ext js,ts",
-    "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
-    "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
-    "start": "react-scripts start",
-    "test": "react-scripts test"
+    "start": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write ."
   },
   "browserslist": {
     "production": [
@@ -26,27 +24,22 @@
       "last 1 safari version"
     ]
   },
-  "dependencies": {
-    "@metamask/providers": "^9.0.0"
-  },
   "devDependencies": {
-    "@metamask/eslint-config": "^10.0.0",
-    "@metamask/eslint-config-jest": "^10.0.0",
-    "@metamask/eslint-config-nodejs": "^10.0.0",
-    "@metamask/eslint-config-typescript": "^10.0.0",
-    "@types/jest": "^27.5.2",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "^8.21.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^26.8.2",
-    "eslint-plugin-jsdoc": "^39.2.9",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.2.1",
-    "prettier-plugin-packagejson": "^2.2.18",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.8.4"
-  }
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "@typescript-eslint/parser": "^5.27.0",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "prettier": "^2.6.2",
+    "prettier-plugin-svelte": "^2.7.0",
+    "svelte": "^3.44.0",
+    "svelte-check": "^2.7.1",
+    "svelte-preprocess": "^4.10.6",
+    "tslib": "^2.3.1",
+    "typescript": "^4.7.4",
+    "vite": "^3.1.0"
+  },
+  "type": "module"
 }
