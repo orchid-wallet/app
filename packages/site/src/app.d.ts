@@ -10,3 +10,7 @@ declare namespace App {
 
 declare const UtilCopyToClipboard: typeof import('./lib/components/util/CopyToClipboard.svelte')['default'];
 declare const UIToast: typeof import('./lib/components/util/Toast.svelte')['default'];
+
+interface Window {
+  ethereum: any;
+}

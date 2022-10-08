@@ -13,7 +13,7 @@ const config: UserConfig = {
     sveltekit()],
   server: {
     fs: {
-      allow: ['..']
+      allow: ['..', '../../']
     }
   }
 };
