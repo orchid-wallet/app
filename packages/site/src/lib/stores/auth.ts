@@ -7,13 +7,15 @@ import { z, ZodObject } from 'zod';
 import Storage from './Storage';
 
 export interface Auth {
-  authenticated?: boolean;
   walletAddress?: string;
+  authenticated: boolean;
+  registeredNotification: boolean
 }
 
 export const BaseAuthStore = {
-  authenticated: false,
   walletAddress: undefined,
+  authenticated: false,
+  registeredNotification: false,
 } as Auth;
 
 function loadAddressFromMessage(message: string, signature: string): string | null {
@@ -48,12 +50,15 @@ function validMessage(message: string) {
 export class AuthStorage extends Storage<Auth> {
   private readonly key = 'AuthStorageIntegration';
   private readonly validator = z.object({
-    authenticated: z.boolean().optional(),
     walletAddress: z.string().optional(),
+    authenticated: z.boolean(),
+    registeredNotification: z.boolean(),
   })
+
   constructor() {
     super();
   }
+
   public getAuth(): Auth | null {
     return this.get(this.validator, this.key);
   }
@@ -72,8 +77,10 @@ const store = writable(BaseAuthStore);
 const { subscribe, set, update } = store;
 
 if (browser) {
+  console.log('Loading AuthStorage from LocalStore')
   const authStorage = new AuthStorage()
   const stored = authStorage.getAuth()
+  console.log(stored);
   if (stored) {
     store.update((self) => ({
       ...self,
@@ -89,6 +96,12 @@ export const authStore = {
   subscribe,
   set,
   update,
+  enabledNotifications: async () => {
+    update((self) => ({
+      ...self,
+      registeredNotification: true,
+    }))
+  },
   authenticate: async () => {
     const { signer } = get(web3Store);
     if (!signer) return;

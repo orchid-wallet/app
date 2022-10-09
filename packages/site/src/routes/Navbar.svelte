@@ -3,6 +3,8 @@
   import ConnectButton from './ConnectButton.svelte';
   import DisconnectButton from './DisconnectButton.svelte';
   import {authStore} from "$lib/stores/auth.js";
+  import {ToastType} from "$lib/types.js";
+  import {utilStore} from "$lib/stores/util.js";
 
   let loading = false;
 
@@ -33,6 +35,7 @@
             {truncatedAddress($authStore.walletAddress)}
               <button on:click={ () => {
                 navigator.clipboard.writeText($authStore.walletAddress);
+                utilStore.showToast("Copied wallet address to clipboard", ToastType.Success)
               }} class="ml-0.5 inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full text-indigo-400 hover:bg-indigo-200 hover:text-indigo-500 focus:bg-indigo-500 focus:text-white focus:outline-none">
               <span class="sr-only">copy wallet address</span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

@@ -1,6 +1,8 @@
 <script lang="ts">
+
   import {Contract, ContractFactory} from "ethers";
-  import abi from '$lib/assets/abi/abi.json';
+  import abi from "$lib/assets/contract/abi.json";
+  import bytecode from "$lib/assets/contract/bytecode";
   import {web3Store} from "$lib/stores/web3";
   import {contractStore} from "$lib/stores/contracts";
 
@@ -20,6 +22,7 @@
     console.log(contract.address);
     console.log(contract.deployTransaction);
   }
+
 </script>
 
 <div class="mx-auto py-8 max-w-7xl sm:px-6 lg:px-8">

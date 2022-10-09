@@ -23,4 +23,5 @@
   {:else}
     <ConnectPrompt />
   {/if}
+  <UiToast />
 </div>

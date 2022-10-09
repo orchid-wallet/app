@@ -9,7 +9,8 @@ declare namespace App {
 }
 
 declare const UtilCopyToClipboard: typeof import('./lib/components/util/CopyToClipboard.svelte')['default'];
-declare const UIToast: typeof import('./lib/components/util/Toast.svelte')['default'];
+declare const UiToast: typeof import('./lib/components/util/Toast.svelte')['default'];
+declare const UiIcon: typeof import('./lib/components/ui/Icon.svelte')['default'];
 declare const UiButton: typeof import('./lib/components/ui/Button.svelte')['default'];
 declare const UiDropdown: typeof import('./lib/components/ui/Dropdown.svelte')['default'];
 
