@@ -17,7 +17,12 @@
     const data = new FormData(this);
     const walletName = data.get('wallet-name');
     let successor = data.get('successor') as string;
-    const threshold = 1 || data.get('threshold') as number;
+    const threshold = data.get('threshold') as number;
+
+    if (!threshold || !walletName || !successor) {
+      utilStore.showToast("Please enter all fields", ToastType.Error);
+      return
+    }
 
     const rpcProvider = new JsonRpcProvider('https://eth-mainnet.gateway.pokt.network/v1/lb/5ed414f3a4ccc6fa16ee44e9')
     try {
