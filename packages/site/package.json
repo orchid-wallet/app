@@ -26,11 +26,13 @@
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.7.1",
+    "@pushprotocol/restapi": "^0.1.1",
     "@rgossiaux/svelte-headlessui": "^1.0.2",
     "@rgossiaux/svelte-heroicons": "^0.1.2",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@tailwindcss/forms": "^0.5.3",
+    "@types/node": "^18.8.3",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "autoprefixer": "^10.4.12",
